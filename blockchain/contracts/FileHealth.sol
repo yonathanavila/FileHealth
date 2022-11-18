@@ -10,6 +10,9 @@ contract FileHealth is Ownable {
     uint256 public counterPatient;
     uint256 public counterFile;
 
+    /// @dev nft contract
+    address fileHealthNFTAddress;
+
     /// @dev uri storage
     string public uriStorage = "";
 
@@ -54,48 +57,47 @@ contract FileHealth is Ownable {
     mapping(address => bool) public isPatient;
 
     /// @dev create constructor
-    constructor(string memory _uriStorage) {
+    constructor(string memory _uriStorage, address _fileHealthNFTAddress) {
         counterDoctor = 0;
         counterPatient = 0;
         counterFile = 0;
         uriStorage = _uriStorage;
+        fileHealthNFTAddress = _fileHealthNFTAddress;
     }
 
     /// @dev register a new doctor
     function registerDoctor(
-        address _doctorAddress,
         string memory _name,
         string memory _surname,
         string memory _birthDate,
         string memory _speciality
     ) public {
         /// @dev check if the doctor is already registered
-        require(!isDoctor[_doctorAddress], "You need to be a doctor");
+        require(isDoctor[msg.sender], "You need to be a doctor");
 
         /// @dev set doctor struct
-        doctors[counterDoctor] = Doctor(_doctorAddress, _name, _surname, _birthDate, _speciality);
+        doctors[counterDoctor] = Doctor(msg.sender, _name, _surname, _birthDate, _speciality);
         counterDoctor++;
 
         /// @dev mint a new file health NFT
-        IERC721Custom(msg.sender).safeMint(_doctorAddress, uriStorage);
+        IERC721Custom(fileHealthNFTAddress).safeMint(msg.sender, uriStorage);
     }
 
     /// @dev register a new patient
     function registerPatient(
-        address _patientAddress,
         string memory _name,
         string memory _surname,
         string memory _birthDate
     ) public {
         /// @dev check if the patient is already registered
-        require(!isPatient[_patientAddress], "You need to be a patient");
+        require(isPatient[msg.sender], "You need to be a patient");
 
         /// @dev set patient struct
-        patients[counterPatient] = Patient(_patientAddress, _name, _surname, _birthDate);
+        patients[counterPatient] = Patient(msg.sender, _name, _surname, _birthDate);
         counterPatient++;
 
         /// @dev mint a new file health NFT
-        IERC721Custom(msg.sender).safeMint(_patientAddress, uriStorage);
+        IERC721Custom(fileHealthNFTAddress).safeMint(msg.sender, uriStorage);
     }
 
     /// @dev create a new medical record
