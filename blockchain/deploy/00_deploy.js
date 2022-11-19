@@ -46,43 +46,38 @@ module.exports = async ({ deployments }) => {
   console.log("Wallet Ethereum Address:", deployer.address);
   console.log("Wallet f4Address: ", f4Address)
 
+  const uriStorage = "https://github.com/yonathanavila/FileHealth/blob/main/ipfs/1.json"
 
-  await deploy("SimpleCoin", {
+
+  let { address:addressFileHealthNFT }  = await deploy("FileHealthNFT", {
     from: deployer.address,
     args: [],
     // since it's difficult to estimate the gas before f4 address is launched, it's safer to manually set
     // a large gasLimit. This should be addressed in the following releases.
-    gasLimit: 1000000000, // BlockGasLimit / 10
+    gasLimit: 10000000000, // BlockGasLimit / 10
     // since Ethereum's legacy transaction format is not supported on FVM, we need to specify
     // maxPriorityFeePerGas to instruct hardhat to use EIP-1559 tx format
     maxPriorityFeePerGas: priorityFee,
     log: true,
   });
 
-  await deploy("MinerAPI", {
-    from: deployer.address,
-    args: [0x0000001],
-    // since it's difficult to estimate the gas before f4 address is launched, it's safer to manually set
-    // a large gasLimit. This should be addressed in the following releases.
-    gasLimit: 1000000000, // BlockGasLimit / 10
-    // since Ethereum's legacy transaction format is not supported on FVM, we need to specify
-    // maxPriorityFeePerGas to instruct hardhat to use EIP-1559 tx format
-    maxPriorityFeePerGas: priorityFee,
-    log: true,
-  });
+  console.log("FileHealthNFT deployed to:", addressFileHealthNFT);
 
-  await deploy("MarketAPI", {
-    from: deployer.address,
-    args: [],
-    // since it's difficult to estimate the gas before f4 address is launched, it's safer to manually set
-    // a large gasLimit. This should be addressed in the following releases.
-    gasLimit: 1000000000, // BlockGasLimit / 10
-    // since Ethereum's legacy transaction format is not supported on FVM, we need to specify
-    // maxPriorityFeePerGas to instruct hardhat to use EIP-1559 tx format
-    maxPriorityFeePerGas: priorityFee,
-    log: true,
-  });
+  if(addressFileHealthNFT){
+    let { address:addressFileHealth} =await deploy("FileHealth", {
+      from: deployer.address,
+      args: [uriStorage, addressFileHealthNFT],
+      // since it's difficult to estimate the gas before f4 address is launched, it's safer to manually set
+      // a large gasLimit. This should be addressed in the following releases.
+      gasLimit: 10000000000, // BlockGasLimit / 10
+      // since Ethereum's legacy transaction format is not supported on FVM, we need to specify
+      // maxPriorityFeePerGas to instruct hardhat to use EIP-1559 tx format
+      maxPriorityFeePerGas: priorityFee,
+      log: true,
+    });
+
+    console.log("FileHealth deployed to:", addressFileHealth);
+  }
 };
 
-
-module.exports.tags = ["SimpleCoin", "MinerAPI", "MarketAPI"];
+module.exports.tags = ["FileHealthNFT" , "FileHealth" ];
