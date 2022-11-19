@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    *{
+        @apply m-0 p-0 list-none font-normal;
+    }
+    body {
+        @apply bg-[#0F1318] text-white overflow-hidden
+    }
+}
