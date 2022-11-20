@@ -34,12 +34,12 @@ const client = createClient({
     //     appName: 'wagmi',
     //   },
     // }),
-    new WalletConnectConnector({
-      chains,
-      options: {
-        qrcode: true,
-      },
-    }),
+    // new WalletConnectConnector({
+    //   chains,
+    //   options: {
+    //     qrcode: true,
+    //   },
+    // }),
     // new InjectedConnector({
     //   chains,
     //   options: {
