@@ -1,0 +1,73 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    *{
+        @apply m-0 p-0 list-none font-normal;
+    }
+    body {
+        @apply bg-[#0F1318] text-white overflow-hidden
+    }
+    form {
+        width: 500px;
+        padding: 16px;
+        max-width: 100%;
+        display: block;
+        margin: 0 auto;
+        color:#333;
+      }
+      label {
+        display: block;
+        padding: 32px 0 8px;
+        font-weight: 700;
+      }
+      #token {
+        width: 100%;
+        padding: 4px;
+        font-size: 1.2rem;
+      }
+      #output {
+        display: block;
+        padding: 16px;
+        margin: 0;
+        color: lime;
+        background:#222;
+        font-family: Courier New, ui-monospace, monospace;
+        font-weight: 500;
+        line-height: 1.6;
+        position: fixed;
+        bottom: 0;
+        height: 33.3%;
+        width: 100%;
+        overflow-y: scroll;
+      }
+      #output a {
+        color: aqua
+      }
+      input[type=submit] {
+        display: block;
+        padding: 4px 16px;
+        font-weight: 700;
+        font-size: 16px;
+        margin-top: 32px;
+      }
+      .imgJR {
+        height: 110px;
+        width: 110px;
+        margin-left: 5%;
+    }
+      .container {
+        display: flex;
+        align-items: center;
+      }
+      .pJR {
+        margin-left: 40%;
+        margin-top: -50%;
+        text-align: left;
+        font-family: "Montserrat", sans-serif;
+        font-weight: 100;
+        line-height: 1.5;
+        display: inline-block;
+    }
+}
