@@ -6,15 +6,15 @@ import { Row, Form, Button } from 'react-bootstrap'
 // import { create as ipfsHttpClient } from 'ipfs-http-client'
 //import { create as ipfsHttpClient } from 'ipfs-http-client'
 import { Buffer } from 'buffer';
-const ipfsClient = require('ipfs-http-client');
-
+import {create} from 'ipfs-http-client';
+// const ipfsClient = ipfsClient
 
 const projectId = "2HmvAI8WpTd4EtDSz9V3S0iyzp5";
 const projectSecret = "80000ed1eda9dc25b4fe324feb20fffa";
 const auth =
     'Basic ' + Buffer.from(projectId + ':' + projectSecret).toString('base64');
 
-const client = ipfsClient.create({
+const client = create({
     host: 'ipfs.infura.io',
     port: 5001,
     protocol: 'https',
@@ -29,7 +29,9 @@ export default function DoctorScreen() {
     const [treatment, setTreatment] = useState('')
     const [description, setDescription] = useState('')
 
-
+    const formHandler = async(event) =>{
+        console.log('hello')
+    }
     const uploadToIPFS = async (event) => {
         event.preventDefault()
         const file = event.target.files[0]
@@ -105,7 +107,8 @@ export default function DoctorScreen() {
                     Add
                 </button>
             </div>
-            <div className="flex justify-center">
+
+            {/* <div className="flex justify-center">
                 {error ? (
                     <h1 className="text-lg bg-red-600 p-1 px-3 rounded-lg mb-4 -mt-4">
                         {error}
@@ -113,7 +116,7 @@ export default function DoctorScreen() {
                 ) : (
                     <></>
                 )}
-            </div>
+            </div> */}
             <hr className="mb-6 border-t" />
         </form>
     )
