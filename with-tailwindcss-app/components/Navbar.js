@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { useConnect } from 'wagmi'
 
 
@@ -8,8 +8,37 @@ import { useConnect } from 'wagmi'
 
 function Navbar() {
 
-    const { connect, connectors, error, isLoading, pendingConnector } =
+    const { connect, connectors, error, isLoading:isLoadingConnect, pendingConnector } =
         useConnect()
+
+    const [_connectors, setConnector] = useState([])
+    const [_isLoadingConnect, setIsLoadingConnect] = useState(false)
+    const [_pendingConnector, setPendingConnector] = useState(null)
+    const [_error, setError] = useState(null)
+
+    useEffect(() => {
+        if (connectors) {
+            setConnector(connectors)
+        }
+    }, [connectors])
+
+    useEffect(() => {
+        if (isLoadingConnect) {
+            setIsLoadingConnect(isLoadingConnect)
+        }
+    }, [isLoadingConnect])
+
+    useEffect(() => {
+        if (pendingConnector) {
+            setPendingConnector(pendingConnector)
+        }
+    }, [pendingConnector])
+
+    useEffect(() => {
+        if (error) {
+            setError(error)
+        }
+    }, [error])
 
     return (
         // <div>Navbar</div>
@@ -32,7 +61,7 @@ function Navbar() {
 
                     <ul className='flex items-center'>
                         <div>
-                            {connectors.map((connector) => (
+                            {_connectors.map((connector) => (
                                 <button className="text-lg text-blue-500 ring-2 ring-blue-600 rounded-lg px-5 py-1.5 hover:bg-blue-600 hover:text-slate-300 transition-all active:scale-90 shadow-lg hover:shadow-blue-600 md:text-sm md:px-4 md:py-1"
                                     disabled={!connector.ready}
                                     key={connector.id}
@@ -40,8 +69,8 @@ function Navbar() {
                                 >
                                     {connector.name}
                                     {!connector.ready && ' (unsupported)'}
-                                    {isLoading &&
-                                        connector.id === pendingConnector?.id &&
+                                    {_isLoadingConnect &&
+                                        connector.id === _pendingConnector?.id &&
                                         ' (connecting)'}
                                 </button>
                             ))}
