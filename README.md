@@ -1,17 +1,21 @@
 # FileHealth
 ## Decentralized Medical Records
 
-[![N|Solid](https://cldup.com/dTxpPi9lDf.thumb.png)](https://nodesource.com/products/nsolid)
 
-[![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
-
-FileHealth provides secure, global, and private medical records for patients and doctors. Powered by Filecoin, Doctors are able to retrieve and add treatment records.
+We are FileHealth. We empower people to store, retrieve and share their medical records on FVM. The problem is, there is no global, decentralized platform that grants patients access to a  way to access their medical records. For example, this is a problem when patients travel and need assistance in another country. What better solution than Filecoin? By using Filecoin, we provide our clients with a way to keep their data stored securely, persistently, and decentralized.
 
 First, the user connects with their wallet. After signing up, they mint an updtable NFT of their medical records. This data can then be mutated and updated.
 
-For access control, we are implementing using Medusa. The patient is able to grant access by adding the doctor's address. After that, the doctor only needs to input the patient's address in order to retrieve their record. 
+First, we used Solidity to deploy into FVM.
 
-In order to mutate data, we plan on using IPNS. 
+- Contract: https://explorer.glif.io/address/0x86CC4Df2c3694cbaF440aE8aE7af54fef601beC2/?network=wallabynet
+- NFT: https://explorer.glif.io/address/0x1955AFB61f8CF5Fc28826A4be19f3F20Ceb3fDd9/?network=wallabynet
+
+For access control, we are implementing using Medusa. The patient is able to grant access by adding the doctor's address. After that, the doctor only needs to input the patient's address in order to retrieve their record. 
+ 
+NEXT.js for the front.
+
+To store the patient's files, we used IPFS, and to mutate them we wanted to implement IPNS.
 
 
 ## Technology used:
@@ -30,3 +34,6 @@ In order to mutate data, we plan on using IPNS.
 - Retrieve Medical Records
 - Update Medical Records
 - Share Patients Data globally. For example, when travelling and using new doctors.
+
+
+While the proyect is not finished and the features are not as perfect as we'd like, we plan to take this proyect long term. We believe in the uses cases, and know many people that could be saved by this.
