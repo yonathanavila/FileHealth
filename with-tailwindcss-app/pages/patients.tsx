@@ -9,11 +9,11 @@ import { useAccount } from "wagmi"
 
 
 export default function Index() {
-  const { address, isConnected } = useAccount()
+    const { address, isConnected } = useAccount()
 
-  return (
-    <>
-      {!address ? <Connect /> : <SignUp />}
-    </>
-  )
+    return (
+        <>
+            {!isConnected ? <Connect /> : <PatientScreen />}
+        </>
+    )
 }
