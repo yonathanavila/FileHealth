@@ -7,7 +7,8 @@ import { Row, Form, Button } from 'react-bootstrap'
 import { Buffer } from 'buffer';
 import { create } from 'ipfs-http-client';
 import { CarReader } from '@ipld/car';
-
+import {db} from '../firebase-config'
+import {collection,getDocs} from 'firebase/firestore'
 // const ipfsClient = ipfsClient
 
 const projectId = "2HmvAI8WpTd4EtDSz9V3S0iyzp5";
@@ -15,14 +16,14 @@ const projectSecret = "80000ed1eda9dc25b4fe324feb20fffa";
 const auth =
     'Basic ' + Buffer.from(projectId + ':' + projectSecret).toString('base64');
 
-// const client = create({
-//     host: 'ipfs.infura.io',
-//     port: 5001,
-//     protocol: 'https',
-//     headers: {
-//         authorization: auth,
-//     },
-// });
+const client = create({
+    host: 'ipfs.infura.io',
+    port: 5001,
+    protocol: 'https',
+    headers: {
+        authorization: auth,
+    },
+});
 
 
 // web3 Storage
@@ -35,7 +36,8 @@ import { Web3Storage } from 'web3.storage'
 
 // }
 
-
+//Firebase
+// const TreatmentCollectionRef = collection()
 
 export default function DoctorScreen() {
 
@@ -51,33 +53,33 @@ export default function DoctorScreen() {
 
         // return cid
         // don't reload the page!
-        event.preventDefault()
+        // event.preventDefault()
 
-        showMessage('> 📦 creating web3.storage client')
-        const client = new Web3Storage({ token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweEQ4MUNGRWU5NDRmQTY4MDIwNzlFREMxOTYyZkQ4NGZDMjI1MUU4MTgiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2Njg5NDQxNDQ3MzUsIm5hbWUiOiJGRVZNIn0.xF_XaN7INglTh1eRSJlXnSyF1pO6_S_CWatjZKQfrO8" })
+        // showMessage('> 📦 creating web3.storage client')
+        // const client = new Web3Storage({ token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweEQ4MUNGRWU5NDRmQTY4MDIwNzlFREMxOTYyZkQ4NGZDMjI1MUU4MTgiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2Njg5NDQxNDQ3MzUsIm5hbWUiOiJGRVZNIn0.xF_XaN7INglTh1eRSJlXnSyF1pO6_S_CWatjZKQfrO8" })
 
-        showMessage('> 🤖 chunking and hashing the files (in your browser!) to calculate the Content ID')
+        // showMessage('> 🤖 chunking and hashing the files (in your browser!) to calculate the Content ID')
         
-        const cid = await client.put(files, {
-            onRootCidReady: localCid => {
-                showMessage(`> 🔑 locally calculated Content ID: ${localCid} `)
-                showMessage('> 📡 sending files to web3.storage ')
-            },
-            onStoredChunk: bytes => showMessage(`> 🛰 sent ${bytes.toLocaleString()} bytes to web3.storage`)
-        })
-        showMessage(`> ✅ web3.storage now hosting ${cid}`)
-        showLink(`https://dweb.link/ipfs/${cid}`)
+        // const cid = await client.put(files, {
+        //     onRootCidReady: localCid => {
+        //         showMessage(`> 🔑 locally calculated Content ID: ${localCid} `)
+        //         showMessage('> 📡 sending files to web3.storage ')
+        //     },
+        //     onStoredChunk: bytes => showMessage(`> 🛰 sent ${bytes.toLocaleString()} bytes to web3.storage`)
+        // })
+        // showMessage(`> ✅ web3.storage now hosting ${cid}`)
+        // showLink(`https://dweb.link/ipfs/${cid}`)
 
-        showMessage('> 📡 fetching the list of all unique uploads on this account')
-        let totalBytes = 0
-        for await (const upload of client.list()) {
-            showMessage(`> 📄 ${upload.cid}  ${upload.name}`)
-            totalBytes += upload.dagSize || 0
-        }
-        showMessage(`> ⁂ ${totalBytes.toLocaleString()} bytes stored!`)
+        // showMessage('> 📡 fetching the list of all unique uploads on this account')
+        // let totalBytes = 0
+        // for await (const upload of client.list()) {
+        //     showMessage(`> 📄 ${upload.cid}  ${upload.name}`)
+        //     totalBytes += upload.dagSize || 0
+        // }
+        // showMessage(`> ⁂ ${totalBytes.toLocaleString()} bytes stored!`)
 
 
-        return cid
+        // return cid
 
     }
 
@@ -128,7 +130,7 @@ export default function DoctorScreen() {
                 <input type='text' placeholder='John Doe' id='doctor' onChange={e => setDoctor(e.target.value)} required /> */}
 
                 <label htmlFor='filepicker'>Pick files to store</label>
-                <input type='file' id='filepicker' name='fileList' onChange={e => setFiles(e.target.files)} multiple required />
+                <input type='file' id='filepicker' name='fileList' onChange={e => uploadToIPFS(e.target.files)} multiple required />
 
                 {/* button */}
                 <input type='submit' value='Submit' id='submit' />

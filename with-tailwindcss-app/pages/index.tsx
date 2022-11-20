@@ -4,10 +4,11 @@ import Connect from '../components/Connect'
 import Footer from '../components/Footer'
 import SignUp from '../components/SignUp'
 import DoctorScreen from '../components/DoctorScreen'
-
+import PatientScreen from '../components/PatientScreen'
 
 
 export default function Index() {
+  // const { address, isConnected } = useAccount()
 
   const address = true;
 
@@ -24,7 +25,7 @@ export default function Index() {
       <Navbar/>
 
       {/* {!address ? <Connect/> : <SignUp/>} */}
-      {!address ? <Connect/> : <DoctorScreen/>}
+      {!address ? <Connect/> : <PatientScreen/>}
 
 
       {/* <h1 className="text-blue-500 font-bold"> Welcome to FileHealth : Decentralized Medical Records</h1> */}
