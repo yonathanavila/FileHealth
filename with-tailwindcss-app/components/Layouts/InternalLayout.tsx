@@ -7,7 +7,8 @@ import DoctorScreen from './../DoctorScreen'
 import PatientScreen from './../PatientScreen'
 
 
-export default function Index({ children }) {
+
+export default function Index({ children }:any) {
     // const { address, isConnected } = useAccount()
 
     const address = true;
