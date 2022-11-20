@@ -47,10 +47,10 @@ function Connect() {
     </div>
 
       </div>
-
+{/* 
       <div className="h-[54vh] absolute top-1 right-0 rounded-md overflow-hidden opacity-100 z-[1500]">
             <Image src={`https://img.seadn.io/files/4b5e1469b134d0c6cc20a113e34b2c65.jpg?fit=max&auto=format`} alt='hero/ethiconimg' decoding="async" priority width={400} height={450} objectFit='fill' />
-      </div>
+      </div> */}
 
     </div>
   </>
