@@ -1,22 +1,23 @@
 //rfc snippet to create functional component
 import React from 'react'
+import Link from 'next/link';
 
 export default function SignUp() {
 
-    const signUpFunc = async (event)=>{
+    const signUpFunc = async (event) => {
         event.preventDefault();
         const name = event.target.name.value;
         const res = await fetch('/api/contact', {
             body: JSON.stringify({
-              name: name,
+                name: name,
             }),
             headers: {
-              'Content-Type': 'application/json',
+                'Content-Type': 'application/json',
             },
             method: 'POST',
-          });
-          const result = await res.json();
-          alert(`Is this your full name: ${result.name}`);
+        });
+        const result = await res.json();
+        alert(`Is this your full name: ${result.name}`);
 
         // const res = await fetch(`https://api.agify.io/?name=${name}`)
         // alert(`Welcome User ${event.target.name.value}?`);
@@ -49,9 +50,9 @@ export default function SignUp() {
 
                         <label for="name">Account Type:</label>
                         <input type="text" id="name" name="name" required />
-
-                        <button type="submit" className="px-4 py-2 font-bold text-white bg-blue-500 rounded-full hover:bg-blue-700">Submit</button>
-
+                        <Link href='/patients' className="px-4 py-2 font-bold text-white bg-blue-500 rounded-full hover:bg-blue-700">
+                            Submit
+                        </Link>
                     </form>
                 </div>
             </div>

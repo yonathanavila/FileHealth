@@ -8,7 +8,7 @@ import PatientScreen from '../components/PatientScreen'
 import { useAccount } from "wagmi"
 
 
-export default function Index() {
+export default function Patients() {
     const { address, isConnected } = useAccount()
 
     return (

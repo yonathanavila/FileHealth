@@ -1,20 +1,37 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import React, { useState, useEffect } from 'react'
-import { useConnect } from 'wagmi'
+import { useConnect, useAccount, useDisconnect } from 'wagmi'
 
 
 //<a href="https://www.linkpicture.com/view.php?img=LPic63783515de592311680753"><img src="https://www.linkpicture.com/q/ethereum-patient-medical-records.png" type="image"></a>
 
 function Navbar() {
-
-    const { connect, connectors, error, isLoading:isLoadingConnect, pendingConnector } =
+    const { address, isConnected } = useAccount()
+    const { disconnect } = useDisconnect()
+    const { connect, connectors, error, isLoading: isLoadingConnect, pendingConnector } =
         useConnect()
 
     const [_connectors, setConnector] = useState([])
     const [_isLoadingConnect, setIsLoadingConnect] = useState(false)
     const [_pendingConnector, setPendingConnector] = useState(null)
     const [_error, setError] = useState(null)
+
+
+    const [_isConnected, setIsConnected] = useState(false)
+    const [_address, setAddress] = useState(null)
+
+    useEffect(() => {
+        if (isConnected) {
+            setIsConnected(isConnected)
+        }
+    }, [isConnected])
+
+    useEffect(() => {
+        if (address) {
+            setAddress(address)
+        }
+    }, [address])
 
     useEffect(() => {
         if (connectors) {
@@ -61,21 +78,38 @@ function Navbar() {
 
                     <ul className='flex items-center'>
                         <div>
-                            {_connectors.map((connector) => (
-                                <button className="text-lg text-blue-500 ring-2 ring-blue-600 rounded-lg px-5 py-1.5 hover:bg-blue-600 hover:text-slate-300 transition-all active:scale-90 shadow-lg hover:shadow-blue-600 md:text-sm md:px-4 md:py-1"
-                                    disabled={!connector.ready}
-                                    key={connector.id}
-                                    onClick={() => connect({ connector })}
-                                >
-                                    {connector.name}
-                                    {!connector.ready && ' (unsupported)'}
-                                    {_isLoadingConnect &&
-                                        connector.id === _pendingConnector?.id &&
-                                        ' (connecting)'}
-                                </button>
-                            ))}
-
-                            {error && <div>{error.message}</div>}
+                            {
+                                !_isConnected ? (
+                                    <>
+                                        {_connectors.map((connector) => (
+                                            <button className="text-lg text-blue-500 ring-2 ring-blue-600 rounded-lg px-5 py-1.5 hover:bg-blue-600 hover:text-slate-300 transition-all active:scale-90 shadow-lg hover:shadow-blue-600 md:text-sm md:px-4 md:py-1"
+                                                disabled={!connector.ready}
+                                                key={connector.id}
+                                                onClick={() => connect({ connector })}
+                                            >
+                                                {connector.name}
+                                                {!connector.ready && ' (unsupported)'}
+                                                {_isLoadingConnect &&
+                                                    connector.id === _pendingConnector?.id &&
+                                                    ' (connecting)'}
+                                            </button>
+                                        ))}
+                                        {error && <div>{error.message}</div>}
+                                    </>
+                                ) : (
+                                    <>
+                                        <a
+                                            className="text-lg text-blue-500 ring-2 ring-blue-600 rounded-lg px-5 py-1.5 hover:bg-blue-600 hover:text-slate-300 transition-all active:scale-90 shadow-lg hover:shadow-blue-600 md:text-sm md:px-4 md:py-1"
+                                        >{_address}</a>
+                                        <button
+                                            className="text-lg text-blue-500 ring-2 ring-blue-600 rounded-lg px-5 py-1.5 hover:bg-blue-600 hover:text-slate-300 transition-all active:scale-90 shadow-lg hover:shadow-blue-600 md:text-sm md:px-4 md:py-1 ml-2"
+                                            onClick={() => disconnect()}
+                                        >
+                                            Disconnect
+                                        </button>
+                                    </>
+                                )
+                            }
                         </div>
                         {/* <button type='button' className='className="text-lg text-blue-500 ring-2 ring-blue-600 rounded-lg px-5 py-1.5 hover:bg-blue-600 hover:text-slate-300 transition-all active:scale-90 shadow-lg hover:shadow-blue-600 md:text-sm md:px-4 md:py-1" onClick={connectMetaMask}'>Connect Wallet</button> */}
                     </ul>

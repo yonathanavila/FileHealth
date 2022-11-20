@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 
-import { useAccount, useConnect, useEnsName, useDisconnect } from 'wagmi'
+import { useConnect, useEnsName, useDisconnect } from 'wagmi'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 
 function Connect() {
-  // const { address, isConnected } = useAccount()
   // const { data: ensName } = useEnsName({ address })
   // const { connect } = useConnect({
   //   connector: new InjectedConnector(),
   // })
+
+
 
   const { connect, connectors, error, isLoading: isLoadingConnect, pendingConnector } =
     useConnect()
