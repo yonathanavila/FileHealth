@@ -11,8 +11,8 @@ import {db} from '../firebase-config'
 import {collection,getDocs} from 'firebase/firestore'
 // const ipfsClient = ipfsClient
 
-const projectId = "2HmvAI8WpTd4EtDSz9V3S0iyzp5";
-const projectSecret = "80000ed1eda9dc25b4fe324feb20fffa";
+const projectId = process.env.PROJECT_ID;
+const projectSecret = process.env.PROJECT_SECRET;
 const auth =
     'Basic ' + Buffer.from(projectId + ':' + projectSecret).toString('base64');
 
