@@ -3,24 +3,9 @@ import Navbar from '../components/Navbar'
 import Connect from '../components/Connect'
 import Footer from '../components/Footer'
 import SignUp from '../components/SignUp'
+import DoctorScreen from '../components/DoctorScreen'
 
-import { configureChains, chain } from 'wagmi'
-import { publicProvider } from 'wagmi/providers/public'
- 
-const { chains, provider, webSocketProvider } = configureChains(
-  [chain.mainnet, chain.polygon],
-  [publicProvider()],
-)
 
-import { WagmiConfig, createClient } from 'wagmi'
-import { getDefaultProvider } from 'ethers'
-
-const client = createClient({
-  autoConnect: true,
-  provider: getDefaultProvider(),
-  webSocketProvider
-})
-//testing
 
 export default function Index() {
 
@@ -29,7 +14,7 @@ export default function Index() {
   return (
     <>
     {/* ask Yonathan */}
-    <WagmiConfig client={client}>
+    
       <Head>
         <title>Create Next App</title>
         <link rel="icon" href="/favicon.ico" />
@@ -38,12 +23,13 @@ export default function Index() {
 
       <Navbar/>
 
-      {!address ? <Connect/> : <SignUp/>}
+      {/* {!address ? <Connect/> : <SignUp/>} */}
+      {!address ? <Connect/> : <DoctorScreen/>}
 
-      {/* // <Connect/> */}
+
       {/* <h1 className="text-blue-500 font-bold"> Welcome to FileHealth : Decentralized Medical Records</h1> */}
       <Footer/>
-    </WagmiConfig>
+    
     </>
   )
 }
