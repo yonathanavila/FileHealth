@@ -66,7 +66,7 @@ function Navbar() {
 
                     <Link href={`/`} passHref legacyBehavior>
                         <a className='flex items-center'>
-                            <Image src={`https://raw.githubusercontent.com/thirdweb-dev/typescript-sdk/main/logo.svg`}
+                            <Image src={`https://github.com/yonathanavila/FileHealth/blob/main/ipfs/logo.jpeg?raw=true`}
                                 alt='thirdweb/logo'
                                 width={45}
                                 height={45}
