@@ -34,7 +34,7 @@ contract FileHealthNFT is
     function safeMint(address to, string memory uri) public {
         uint256 tokenId = _tokenIdCounter.current();
         _tokenIdCounter.increment();
-        _safeMint(to, tokenId);
+        _mint(to, tokenId);
         _setTokenURI(tokenId, uri);
     }
 
