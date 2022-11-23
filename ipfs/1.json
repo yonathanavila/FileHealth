@@ -1,7 +1,7 @@
 {
     "description": "Decentralized Health Records. Patients are able to grant access to authorized doctors.",
     "external_url": "https://openseacreatures.io/3",
-    "image": "https://github.com/yonathanavila/FileHealth/blob/main/ipfs/1.jpeg",
+    "image": "https://raw.githubusercontent.com/yonathanavila/FileHealth/main/ipfs/1.jpeg",
     "name": "File Health",
     "attributes": [
         {
